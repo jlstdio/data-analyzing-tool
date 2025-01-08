@@ -11,6 +11,21 @@ def select_dataset(dataset_name):
     if dataset_name == 'cifar-10':
         from dataset.cifar10.cifar10DataLoader import cifar10Dataloader
         dataloader = cifar10Dataloader('./dataset/cifar10')
+    elif dataset_name == 'cifar-10_jitter':
+        from dataset.cifar10_expanded.cifar10_expanded_dataloader import cifar10_expanded_dataloader
+        dataloader = cifar10_expanded_dataloader('./dataset/cifar10_expanded/cifar10_expanded')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.load_dataset_from_batches("cifar10_jitter")
+    elif dataset_name == 'cifar-10_rotate':
+        from dataset.cifar10_expanded.cifar10_expanded_dataloader import cifar10_expanded_dataloader
+        dataloader = cifar10_expanded_dataloader('./dataset/cifar10_expanded/cifar10_expanded')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.load_dataset_from_batches("cifar10_rotate")
+    elif dataset_name == 'cifar-10_noise':
+        from dataset.cifar10_expanded.cifar10_expanded_dataloader import cifar10_expanded_dataloader
+        dataloader = cifar10_expanded_dataloader('./dataset/cifar10_expanded/cifar10_expanded')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.load_dataset_from_batches("cifar10_noise")
     elif dataset_name == 'cifar-100':
         from dataset.cifar100.cifar100DataLoader import cifar100Dataloader
         dataloader = cifar100Dataloader('./dataset/cifar100')
@@ -21,7 +36,8 @@ def select_dataset(dataset_name):
         from dataset.svhn.svhn_dataloader import svhnDataloader
         dataloader = svhnDataloader(data_dir='./dataset/svhn/')
 
-    (x_train, y_train), (x_test, y_test) = dataloader.load_data()
+    if dataset_name != "cifar-10_jitter" and dataset_name != "cifar-10_rotate" and dataset_name != "cifar-10_noise":
+        (x_train, y_train), (x_test, y_test) = dataloader.load_data()
     classes = list(set(y_test))
 
     # trainDataset = zip(y_train, x_train)
