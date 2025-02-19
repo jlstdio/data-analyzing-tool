@@ -7,10 +7,12 @@ from data_prepare.data_preprocess import prepareData_accWithSTFT_2d
 
 def select_dataset(dataset_name):
     dataloader = None
+    (x_train, y_train), (x_test, y_test) = (None, None), (None, None)
 
     if dataset_name == 'cifar-10':
         from dataset.cifar10.cifar10DataLoader import cifar10Dataloader
         dataloader = cifar10Dataloader('./dataset/cifar10')
+        (x_train, y_train), (x_test, y_test) = dataloader.load_data()
     elif dataset_name == 'cifar-10_jitter':
         from dataset.cifar10_expanded.cifar10_expanded_dataloader import cifar10_expanded_dataloader
         dataloader = cifar10_expanded_dataloader('./dataset/cifar10_expanded/cifar10_expanded')
@@ -29,15 +31,71 @@ def select_dataset(dataset_name):
     elif dataset_name == 'cifar-100':
         from dataset.cifar100.cifar100DataLoader import cifar100Dataloader
         dataloader = cifar100Dataloader('./dataset/cifar100')
+        (x_train, y_train), (x_test, y_test) = dataloader.load_data()
     elif dataset_name == 'mnist':
         from dataset.mnist.mnistDataLoader import mnistDataloader
         dataloader = mnistDataloader(data_dir='./dataset/mnist/')
+        (x_train, y_train), (x_test, y_test) = dataloader.load_data()
     elif dataset_name == 'svhn':
         from dataset.svhn.svhn_dataloader import svhnDataloader
         dataloader = svhnDataloader(data_dir='./dataset/svhn/')
-
-    if dataset_name != "cifar-10_jitter" and dataset_name != "cifar-10_rotate" and dataset_name != "cifar-10_noise":
         (x_train, y_train), (x_test, y_test) = dataloader.load_data()
+    elif dataset_name == 'cifar-10_jg':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_jitter_data_green()
+    elif dataset_name == 'cifar-10_jo':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_jitter_data_orange()
+    elif dataset_name == 'cifar-10_jr':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_jitter_data_red()
+    elif dataset_name == 'cifar-10_jp':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_jitter_data_purple()
+    elif dataset_name == 'cifar-10_r1':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_rotate_data_1()
+    elif dataset_name == 'cifar-10_r2':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_rotate_data_2()
+    elif dataset_name == 'cifar-10_r3':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_rotate_data_3()
+    elif dataset_name == 'cifar-10_r4':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_rotate_data_4()
+    elif dataset_name == 'cifar-10_lp':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_freq_lowpass()
+    elif dataset_name == 'cifar-10_bp':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_freq_bandpass()
+    elif dataset_name == 'cifar-10_bs':
+        from dataset.cifar10_expanded_3.cifar10_expanded_3_dataloader import cifar10_expanded_3_dataloader
+        dataloader = cifar10_expanded_3_dataloader('./dataset/cifar10_expanded_3')
+        _, _ = dataloader.load_data()
+        (x_train, y_train), (x_test, y_test) = dataloader.get_freq_bandstop()
+
     classes = list(set(y_test))
 
     # trainDataset = zip(y_train, x_train)

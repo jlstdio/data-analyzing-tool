@@ -156,10 +156,9 @@ class cifar10_expanded_dataloader(object):
 
     def _random_rotate(self, images):
         """
-        0도 ~ 350도 (10도 간격) 중 하나를 무작위 선택해 회전
         images shape: (N, 32, 32, 3)
         """
-        possible_angles = np.arange(0, 360, 10)
+        possible_angles = np.arange(-10, 10, 1)
         images_rotated = np.zeros_like(images)
         N = images.shape[0]
         for i in range(N):
@@ -310,7 +309,6 @@ if __name__ == "__main__":
     dataloader = cifar10_expanded_dataloader('./cifar10_expanded')
 
     (x_train, y_train), (x_test, y_test) = dataloader.load_data()
-
 
     # 2) 네 가지 버전 데이터셋 얻기
     (x_train_orig, y_train_orig), (x_test_orig, y_test_orig) = dataloader.get_original_data()
